@@ -1,0 +1,48 @@
+.modalWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 3px;
+  width: 90%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 16px;
+  h5 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px 16px;
+  height: 60px;
+  margin-top: 50px;
+}
+
+.infoList {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 10px;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 0.7142857142857143rem;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  justify-content: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.infoList b {
+  font-weight: 500;
+  font-size: 0.8928571428571429rem;
+  line-height: 1.6;
+  letter-spacing: 0.0075em;
+}

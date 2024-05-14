@@ -1,0 +1,35 @@
+.table {
+  height: auto !important;
+  flex-grow: 0 !important;
+}
+
+.mobileList div {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.mobileList p {
+  text-align: left !important;
+}
+
+.mobileList b,
+.mobileList p {
+  margin: 0;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 0.7142857142857143rem;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  font-weight: 700;
+}
+
+.mobileList span {
+  margin: 0;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 0.7142857142857143rem;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+}

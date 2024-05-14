@@ -1,0 +1,23 @@
+.rootOutlined {
+  background: transparent;
+  color: #2e2b2b !important;
+  border-color: var(--status-color) !important;
+  font-weight: 500;
+}
+
+@media (max-width: 800px) {
+  .rootOutlined {
+    width: 10px !important;
+    height: 10px !important;
+    background: var(--status-color) !important;
+    span {
+      display: none;
+    }
+  }
+}
+
+.rootFilled {
+  background: var(--status-color);
+  border-color: var(--status-color);
+  color: white;
+}
