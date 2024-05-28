@@ -1,5 +1,6 @@
 import RouteIcon from '@mui/icons-material/Route';
 import TuneIcon from '@mui/icons-material/Tune';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import { SvgIconTypeMap } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
@@ -19,6 +20,7 @@ export interface NavLink {
 
 export const ACTIONS = {
   EDIT_PROFILE_ACTION: 'openEditProfile',
+  LOG_OUT_ACTION: 'logOut',
 };
 
 export const NAV_LINKS: NavLink[] = [
@@ -42,5 +44,11 @@ export const NAV_LINKS: NavLink[] = [
     routePath: ROUTE_PATHS.SETTINGS.ROOT,
     icon: TuneIcon,
     action: ACTIONS.EDIT_PROFILE_ACTION,
+  },
+  {
+    label: 'Ausloggen',
+    routePath: ROUTE_PATHS.SETTINGS.ROOT,
+    icon: LogoutIcon,
+    action: ACTIONS.LOG_OUT_ACTION,
   },
 ];

@@ -32,6 +32,11 @@ export function NavLinkItem({
   const handleOpenEditModal = () => setEditModal(true);
   const handleCloseEditModal = () => setEditModal(false);
 
+  const handleLogout = () => {
+    localStorage.removeItem('fordexAuth');
+    window.location.pathname = '/sign-in';
+  };
+
   return (
     <Fragment>
       {action === ACTIONS.EDIT_PROFILE_ACTION && (
@@ -64,7 +69,9 @@ export function NavLinkItem({
         onClick={
           action === ACTIONS.EDIT_PROFILE_ACTION
             ? handleOpenEditModal
-            : undefined
+            : action === ACTIONS.LOG_OUT_ACTION
+              ? handleLogout
+              : undefined
         }
       >
         <ListItemButton selected={matches}>
