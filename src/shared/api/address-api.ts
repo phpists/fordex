@@ -22,6 +22,7 @@ export const ADDRESS_API_URLS = {
   getCountries: '/v1/dictionary/address/filter?type=country',
   getCities: '/v1/dictionary/address/filter?type=zipCity',
   getPostAddresses: '/v1/dictionary/address/post/all',
+  getPackadges: '/api/packing/all',
 };
 
 export function getPostAddresses(signal?: AbortSignal) {
@@ -43,4 +44,13 @@ export function getCities(signal?: AbortSignal) {
   return httpClient.get<AddressDTO_Deprecated[]>(ADDRESS_API_URLS.getCities, {
     signal,
   });
+}
+
+export function getPackadges(signal?: AbortSignal) {
+  return httpClient.get<AddressDTO_Deprecated[]>(
+    ADDRESS_API_URLS.getPackadges,
+    {
+      signal,
+    }
+  );
 }

@@ -11,5 +11,5 @@ export const RequestOrderStatusText = {
   [RequestOrderStatus.OpenedViaWeb]: 'In Bearbeitung',
   [RequestOrderStatus.Confirmed]: 'Bestätigt',
   [RequestOrderStatus.CancelledByContractor]: 'Storniert Auftr.',
-  [RequestOrderStatus.CancelledByCustomer]: 'Storniert Kunde',
+  [RequestOrderStatus.CancelledByCustomer]: 'Storniert',
 };

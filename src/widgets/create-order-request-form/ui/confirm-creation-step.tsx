@@ -111,10 +111,10 @@ export function ConfirmCreationStep() {
                 <Grid item xs component="span">
                   <Typography>
                     {addressFrom.timeFrom &&
-                      dayjs(addressFrom.timeFrom).format('hh:mm')}{' '}
+                      dayjs(addressFrom.timeFrom).format('HH:mm')}{' '}
                     {addressFrom.timeFrom && addressFrom.timeTo && '-'}{' '}
                     {addressFrom.timeTo &&
-                      dayjs(addressFrom.timeTo).format('hh:mm')}
+                      dayjs(addressFrom.timeTo).format('HH:mm')}
                   </Typography>
                 </Grid>
               </Grid>
@@ -161,10 +161,10 @@ export function ConfirmCreationStep() {
                 <Grid item xs>
                   <Typography component="span">
                     {addressTo.timeFrom &&
-                      dayjs(addressTo.timeFrom).format('hh:mm')}{' '}
+                      dayjs(addressTo.timeFrom).format('HH:mm')}{' '}
                     {addressTo.timeFrom && addressTo.timeTo && '-'}{' '}
                     {addressTo.timeTo &&
-                      dayjs(addressTo.timeTo).format('hh:mm')}
+                      dayjs(addressTo.timeTo).format('HH:mm')}
                   </Typography>
                 </Grid>
               </Grid>

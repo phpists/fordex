@@ -22,7 +22,8 @@ export function interceptResponseWithAuth(
       if (
         error instanceof AxiosError &&
         error.response &&
-        error.response.status === 401 &&
+        error.response.status !== 401 &&
+        error.response.status !== 400 &&
         error.config &&
         !error.config._retry
       ) {
@@ -43,6 +44,11 @@ export function interceptResponseWithAuth(
           onRefreshError();
           return Promise.reject(error);
         }
+      }
+      if (error.response.status == 401) {
+        localStorage.removeItem('fordexAuth');
+        window.location.pathname = '/sign-in';
+        return Promise.reject(error);
       }
 
       return Promise.reject(error);

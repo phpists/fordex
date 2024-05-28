@@ -189,6 +189,7 @@ export function AddressFromInfo() {
                         error: invalid,
                       },
                     }}
+                    defaultValue={dayjs().set('hours', 0).set('minutes', 0)}
                     onChange={(value: Dayjs | null) =>
                       field.onChange(value?.toISOString() ?? '')
                     }
@@ -214,6 +215,7 @@ export function AddressFromInfo() {
                         error: invalid,
                       },
                     }}
+                    defaultValue={dayjs().set('hours', 0).set('minutes', 0)}
                     onChange={(value: Dayjs | null) =>
                       field.onChange(value?.toISOString() ?? '')
                     }

@@ -11,6 +11,7 @@ import {
 
 import { ActiveOrderModel } from '../model/types';
 import { CancelRequestOrderRowAction } from '../ui/row-actions';
+import { DownloadDocumentRowAction } from '../ui/row-actions/download-document';
 
 const activeOrdersTableColumnBuilder = createColumnBuilder<ActiveOrderModel>();
 const requestOrdersTableColumnBuilder =
@@ -210,6 +211,15 @@ export const configureRequestOrdersTableColumns = () => [
         {!(isOrderRejected(status) || isOrderConfirmed(status)) && (
           <CancelRequestOrderRowAction orderId={id} />
         )}
+      </Box>
+    ),
+  }),
+  activeOrdersTableColumnBuilder.create('id', {
+    id: 'id',
+    renderHead: () => '',
+    renderCell: (id) => (
+      <Box display="flex">
+        <DownloadDocumentRowAction orderId={id} />
       </Box>
     ),
   }),

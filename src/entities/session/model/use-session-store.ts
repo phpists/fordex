@@ -41,15 +41,21 @@ export const useSessionStore = create<SessionStore>()(
         } = get();
         if (credentials) {
           set({ credentialsRefreshing: true });
+          const savedAuthCredentials = getAuthCredentialsFromLocalStorage();
           try {
-            const response = await refreshSession(credentials.refreshToken);
-            setCredentials(response.data, shouldRemember);
-            set({ credentialsRefreshing: false });
-          } catch (e) {
-            if (e instanceof AxiosError) {
+            const response = await refreshSession(
+              savedAuthCredentials?.refreshToken ?? credentials?.refreshToken
+            );
+            if (response?.status === 200) {
+              setCredentials(response.data, shouldRemember);
+              set({ credentialsRefreshing: false });
+            } else {
               authExpirationHandler?.();
               clearState();
             }
+          } catch {
+            authExpirationHandler?.();
+            clearState();
           }
         }
       },
@@ -85,11 +91,16 @@ export const useSessionStore = create<SessionStore>()(
         _trackTokenExpiration();
       },
       _trackTokenExpiration: () => {
-        const { credentials, _makeRefreshToken: makeRefreshToken } = get();
+        const {
+          credentials,
+          _makeRefreshToken: makeRefreshToken,
+          _untrackTokenExpiration: untrackTokenExpiration,
+        } = get();
         if (credentials) {
           const timerId = window.setTimeout(
             () => {
               makeRefreshToken();
+              untrackTokenExpiration();
             },
             credentials.expiresIn * 1000 - 10000
           );
@@ -112,6 +123,7 @@ export const useSessionStore = create<SessionStore>()(
           const requestInterceptorId = interceptRequestWithAuth(
             credentials.accessToken
           );
+
           const responseInterceptorId = interceptResponseWithAuth(
             credentials.refreshToken,
             (credentials) => setCredentials(credentials, shouldRemember),
@@ -156,10 +168,19 @@ export const useSessionStore = create<SessionStore>()(
 
           if (savedAuthCredentials) {
             try {
-              const { data: refreshedCredentials } = await refreshSession(
+              const { data: refreshedCredentials }: any = await refreshSession(
                 savedAuthCredentials.refreshToken,
                 abortController.signal
-              );
+              ).catch((err: AxiosError) => {
+                if (err?.response?.status === 401) {
+                  unsubscribe();
+                  clearAuthCredentialsInLocalStorage();
+                  onAuthExpiration?.();
+                  set({ credentialsLoading: false });
+                  window.location.pathname = '/sign-in';
+                }
+              });
+
               setCredentials(refreshedCredentials, true);
               set({
                 credentialsLoading: false,

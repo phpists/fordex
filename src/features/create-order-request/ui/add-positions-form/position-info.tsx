@@ -11,6 +11,7 @@ import { Grid } from 'shared/components/Grid';
 
 import { useAddPositionsFormContext } from '../../model/use-add-positions-form';
 import { PositionListItem } from './position-list-item';
+import { PackadgeSelect } from 'entities/address/ui/packadge-select';
 
 interface ProductInfoProps {
   index: number;
@@ -46,7 +47,6 @@ export const PositionInfo = forwardRef<PositionInfoRef, ProductInfoProps>(
     const { error: volumeError } = getFieldState(`positions.${index}.volume`);
     const { error: ldmError } = getFieldState(`positions.${index}.ldm`);
     const { error: areaError } = getFieldState(`positions.${index}.area`);
-    const { invalid: packInvalid } = getFieldState(`positions.${index}.pack`);
     const { invalid: dangerousGoodsInvalid } = getFieldState(
       `positions.${index}.dangerousGoods`
     );
@@ -133,13 +133,12 @@ export const PositionInfo = forwardRef<PositionInfoRef, ProductInfoProps>(
                   />
                 </Grid>
                 <Grid xs={12}>
-                  <TextField
-                    {...register(`positions.${index}.pack`)}
-                    fullWidth
-                    variant="standard"
-                    label="Verp."
-                    error={packInvalid}
-                    inputProps={{ maxLength: 16 }}
+                  <PackadgeSelect
+                    formControlProps={{
+                      fullWidth: true,
+                      variant: 'standard',
+                    }}
+                    index={index}
                   />
                 </Grid>
                 <Grid xs={12}>

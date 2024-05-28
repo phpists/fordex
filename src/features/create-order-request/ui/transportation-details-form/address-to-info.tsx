@@ -51,10 +51,12 @@ export function AddressToInfo() {
   );
 
   useEffect(() => {
-    if (IS_NEXT_DAY) {
-      setValue('addressTo.date', NEXT_DAY?.toISOString());
-    } else {
-      setValue('addressTo.date', MIN_CURRENT_DATE?.toISOString());
+    if (addressToDateISO?.length === 0) {
+      if (IS_NEXT_DAY) {
+        setValue('addressTo.date', NEXT_DAY?.toISOString());
+      } else {
+        setValue('addressTo.date', MIN_CURRENT_DATE?.toISOString());
+      }
     }
   }, []);
 
@@ -63,6 +65,7 @@ export function AddressToInfo() {
       dayjs(addressFromDateISO)?.unix() > dayjs(addressToDateISO)?.unix() ||
       addressToDateISO?.length === 0
     ) {
+      console.log('here');
       setValue('addressTo.date', addressFromDateISO);
     }
   }, [addressFromDateISO]);
@@ -172,6 +175,7 @@ export function AddressToInfo() {
                     label="Abladedatum"
                     value={field.value ? dayjs(field.value) : null}
                     minDate={addressFromDateParsed ?? MIN_CURRENT_DATE}
+                    defaultValue={dayjs().set('hours', 0).set('minutes', 0)}
                     onChange={(value: Dayjs | null) =>
                       field.onChange(value?.toISOString() ?? '')
                     }
@@ -207,6 +211,7 @@ export function AddressToInfo() {
                         error: invalid,
                       },
                     }}
+                    defaultValue={dayjs().set('hours', 0).set('minutes', 0)}
                     onChange={(value: Dayjs | null) =>
                       field.onChange(value?.toISOString() ?? '')
                     }
@@ -232,6 +237,7 @@ export function AddressToInfo() {
                         error: invalid,
                       },
                     }}
+                    defaultValue={dayjs().set('hours', 0).set('minutes', 0)}
                     onChange={(value: Dayjs | null) =>
                       field.onChange(value?.toISOString() ?? '')
                     }

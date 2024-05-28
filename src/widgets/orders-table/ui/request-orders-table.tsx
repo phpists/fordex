@@ -1,6 +1,6 @@
 import { useStore } from 'zustand';
 import { useShallow } from 'zustand/react/shallow';
-import { memo, useCallback, useEffect, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -12,7 +12,6 @@ import {
   MOBILE_COLUMNS_ORDERS,
   configureRequestOrdersTableColumns,
 } from '../lib/configure-columns';
-import axios from 'axios';
 
 const { usePaginatedQuery: usePaginatedOrdersQuery, store } =
   paginatedOrdersQuery;
@@ -51,14 +50,6 @@ export const RequestOrdersTable = memo(function RequestOrdersTableBase() {
     }),
     [onFabClick]
   );
-
-  useEffect(() => {
-    axios.get('https://test.fordexs.com/v1/dictionary/address/post/all', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('fordexAuth') ? JSON.parse(localStorage.getItem('fordexAuth') ?? '')?.accessToken : ''}`,
-      },
-    });
-  }, []);
 
   return (
     <DataTable>

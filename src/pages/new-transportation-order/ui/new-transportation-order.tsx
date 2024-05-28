@@ -9,7 +9,7 @@ export const NewTransportationOrderPage = () => {
         onSuccess={() => null}
         sx={(theme) => ({
           margin: 'auto',
-          maxHeight: 600,
+          maxHeight: 670,
           maxWidth: 1000,
           [theme.breakpoints.down('md')]: {
             borderRadius: 0,
