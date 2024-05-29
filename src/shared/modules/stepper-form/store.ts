@@ -16,6 +16,8 @@ interface StepperStore {
   goBack: () => void;
   isFirstStep: () => boolean;
   isLastStep: () => boolean;
+  disabled: boolean;
+  toggleDisabled: (value: boolean) => void;
 }
 type VanillaStepperStore = ReturnType<typeof createStepperStore>;
 type StepperStoreSelector<T> = (store: StepperStore) => T;
@@ -51,6 +53,8 @@ export const createStepperStore = (
         },
         isFirstStep: () => !get().canGoBack(),
         isLastStep: () => !get().canGoNext(),
+        disabled: false,
+        toggleDisabled: (value) => set({ disabled: value }),
       }),
       { name: 'stepper-form' }
     )

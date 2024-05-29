@@ -8,7 +8,7 @@ import {
   Typography,
   createTheme,
 } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import dayjs from 'dayjs';
 import { Controller } from 'react-hook-form';
 
@@ -16,7 +16,7 @@ import { useConfirmCreationForm } from '../model/use-confirm-creation-form';
 import { ProductsTable } from './products-table';
 import { useTransportationOrderStore } from '../model/use-transportation-order-store';
 import { getDisplayAddressText } from '../lib/get-display-address-text';
-import { ProfileInfoDTO, getProfileInfo } from 'shared/api';
+import { ProfileInfoDTO } from 'shared/api';
 
 const theme = createTheme({
   typography: {
@@ -42,14 +42,17 @@ const theme2 = createTheme({
   },
 });
 
-export function ConfirmCreationStep() {
+interface Props {
+  profileInfo?: ProfileInfoDTO | null;
+}
+
+export function ConfirmCreationStep({ profileInfo }: Props) {
   const { addressFrom, addressTo, customerReference, details } =
     useTransportationOrderStore((store) => store.transportationDetailsForm);
   const products = useTransportationOrderStore(
     (store) => store.positionsForm.positions
   );
   const form = useConfirmCreationForm();
-  const [profileInfo, setProfileInfo] = useState<ProfileInfoDTO | null>(null);
 
   const displayDangerousGoods = useMemo(() => {
     const dangerousProducts = products.filter((it) => !!it.dangerousGoods);
@@ -60,10 +63,6 @@ export function ConfirmCreationStep() {
       .map((it, i) => `${i + 1}. ${it.dangerousGoods}`)
       .join(', ');
   }, [products]);
-
-  useEffect(() => {
-    getProfileInfo().then((resp) => setProfileInfo(resp?.data?.data));
-  }, []);
 
   return (
     <Stack gap={1} height="100%" overflow="auto">

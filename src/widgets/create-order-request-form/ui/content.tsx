@@ -11,6 +11,8 @@ import { MultiStepForm } from 'shared/modules';
 import { useStepperStoreContext } from 'shared/modules/stepper-form/store';
 import { useStore } from 'zustand';
 import { TRANSPORTATION_ORDER_STEPS_TEXTS } from '../model/transportation-order-steps';
+import { ProfileInfoDTO, getProfileInfo } from 'shared/api';
+import { useEffect, useRef, useState } from 'react';
 
 const Content = styled(Box)<FormContentProps>(({ theme, withDescription }) => ({
   zIndex: 0,
@@ -28,17 +30,28 @@ const Content = styled(Box)<FormContentProps>(({ theme, withDescription }) => ({
     overflow: 'initial',
     flexGrow: 1,
   },
-  minHeight: 460
+  minHeight: 460,
 }));
 
 export function FormContent() {
   const stepperStore = useStepperStoreContext();
   const activeStep = useStore(stepperStore, (state) => state.step);
   const textContent = TRANSPORTATION_ORDER_STEPS_TEXTS[activeStep];
+  const [profileInfo, setProfileInfo] = useState<ProfileInfoDTO | null>(null);
+  const isFirstRender = useRef(true);
+
+  const handleGetProfileInfo = () => {
+    isFirstRender.current = false;
+    getProfileInfo().then((resp) => setProfileInfo(resp?.data?.data));
+  };
+
+  useEffect(() => {
+    isFirstRender.current && handleGetProfileInfo();
+  }, []);
 
   return (
     <Content withDescription={!!textContent.description}>
-      <MultiStepForm.FormStepContent />
+      <MultiStepForm.FormStepContent profileInfo={profileInfo} />
     </Content>
   );
 }

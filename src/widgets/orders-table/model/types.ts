@@ -13,4 +13,5 @@ export interface ActiveOrderModel {
   isMobile?: boolean;
   mobileRowsList?: string[];
   columnNumber?: number;
+  orderNumber?: string;
 }

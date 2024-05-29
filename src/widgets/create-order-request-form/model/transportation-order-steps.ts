@@ -35,6 +35,7 @@ export const TRANSPORTATION_ORDER_STEPS = createFormSteps((builder) => [
     validationSchema: confirmCreationFormValidation,
     getDefaultValues: () => ({ confirmed: false }),
     onSubmit: () => useTransportationOrderStore.getState().createOrder(),
+    // @ts-ignore: Unreachable code error
     component: ConfirmCreationStep,
     onComplete: () => {
       queryClient.invalidateQueries({

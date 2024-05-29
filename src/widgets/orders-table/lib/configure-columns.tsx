@@ -214,13 +214,21 @@ export const configureRequestOrdersTableColumns = () => [
       </Box>
     ),
   }),
-  activeOrdersTableColumnBuilder.create('id', {
-    id: 'id',
-    renderHead: () => '',
-    renderCell: (id) => (
-      <Box display="flex">
-        <DownloadDocumentRowAction orderId={id} />
-      </Box>
-    ),
-  }),
+  activeOrdersTableColumnBuilder.create(
+    ({ id, orderNumber }) => ({ id, orderNumber }),
+    {
+      id: 'id',
+      renderHead: () => '',
+      renderCell: ({ id, orderNumber }) => {
+        return (
+          <Box display="flex">
+            <DownloadDocumentRowAction
+              orderId={id}
+              orderNumber={orderNumber ?? ''}
+            />
+          </Box>
+        );
+      },
+    }
+  ),
 ];

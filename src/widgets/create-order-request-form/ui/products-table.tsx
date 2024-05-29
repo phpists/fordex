@@ -9,7 +9,7 @@ import { configureProductColumns } from '../lib/configure-product-columns';
 import classes from './products-table.module.css';
 
 export function ProductsTable() {
-  const STRING_FIELDS = ['marking', 'description'];
+  const STRING_FIELDS = ['marking', 'description', 'pack'];
   const products = useTransportationOrderStore(
     (store) => store.positionsForm.positions
   );

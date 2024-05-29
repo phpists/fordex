@@ -6,6 +6,7 @@ import { inRange } from 'lodash-es';
 
 import { addressDTOSchema } from 'shared/api/address-api';
 import { postAddressSchema } from 'entities/address';
+import { useStepperStore } from 'shared/modules';
 
 const MAX_DATE_TO_YEAR_DIFFERENCE = 2;
 
@@ -168,19 +169,64 @@ function useWatchDateRange() {
  * @param addressDirection Address direction 'from' or 'to'
  */
 function useWatchTimeRanges(addressDirection: 'addressFrom' | 'addressTo') {
-  const { control, getValues, setValue } =
+  const { control, getValues, setError, clearErrors } =
     useFormContext<TransportationDetailsFormValues>();
+  const { toggleDisabled } = useStepperStore();
 
   const [watchTimeFrom, watchTimeTo] = useWatch({
     control,
     name: [`${addressDirection}.timeFrom`, `${addressDirection}.timeTo`],
   });
+  const [dateFrom, dateTo] = useWatch({
+    control,
+    name: ['addressFrom.date', 'addressTo.date'],
+  });
+
+  const [watchAddressFromTimeFrom, watchAddressFromTimeTo] = useWatch({
+    control,
+    name: [`addressFrom.timeFrom`, `addressFrom.timeTo`],
+  });
+  const [watchAddressToTimeFrom, watchAddressToTimeTo] = useWatch({
+    control,
+    name: [`addressTo.timeFrom`, `addressTo.timeTo`],
+  });
+
+  useEffect(() => {
+    if (
+      !dayjs(watchAddressFromTimeFrom).isAfter(watchAddressFromTimeTo) &&
+      !dayjs(watchAddressToTimeFrom).isAfter(watchAddressToTimeTo)
+    ) {
+      toggleDisabled(false);
+    }
+
+    if (
+      dayjs(watchAddressToTimeTo).isBefore(watchAddressFromTimeFrom) &&
+      dateFrom === dateTo
+    ) {
+      toggleDisabled(true);
+      setError(`addressTo.timeTo`, {
+        type: 'manual',
+      });
+    } else if (
+      dayjs(watchAddressToTimeTo).isBefore(watchAddressFromTimeFrom) &&
+      dateFrom !== dateTo
+    ) {
+      toggleDisabled(false);
+      clearErrors('addressTo.timeTo');
+    }
+  }, [watchAddressFromTimeFrom, watchAddressToTimeFrom, dateFrom, dateTo]);
 
   useEffect(() => {
     try {
       const timeTo = getValues(`${addressDirection}.timeTo`);
       if (dayjs(watchTimeFrom).isAfter(timeTo)) {
-        setValue(`${addressDirection}.timeTo`, watchTimeFrom);
+        setError(`${addressDirection}.timeFrom`, {
+          type: 'manual',
+        });
+        toggleDisabled(true);
+      } else {
+        clearErrors(`${addressDirection}.timeFrom`);
+        clearErrors(`${addressDirection}.timeTo`);
       }
     } catch {
       return;
@@ -192,7 +238,13 @@ function useWatchTimeRanges(addressDirection: 'addressFrom' | 'addressTo') {
     try {
       const timeFrom = getValues(`${addressDirection}.timeFrom`);
       if (dayjs(watchTimeTo).isBefore(timeFrom)) {
-        setValue(`${addressDirection}.timeFrom`, watchTimeTo);
+        setError(`${addressDirection}.timeTo`, {
+          type: 'manual',
+        });
+        toggleDisabled(true);
+      } else {
+        clearErrors(`${addressDirection}.timeFrom`);
+        clearErrors(`${addressDirection}.timeTo`);
       }
     } catch {
       return;

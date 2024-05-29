@@ -5,10 +5,12 @@ import icon from '../../../../shared/assets/images/file.svg';
 
 interface DownloadDocumentRowActionProps {
   orderId: string;
+  orderNumber: string;
 }
 
 export function DownloadDocumentRowAction({
   orderId,
+  orderNumber,
 }: DownloadDocumentRowActionProps) {
   const handleDownLoad = () => {
     getDocument({ data: { orderId: Number(orderId) } }).then((resp) => {
@@ -19,7 +21,7 @@ export function DownloadDocumentRowAction({
       );
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `order${orderId}.pdf`);
+      link.setAttribute('download', `order${orderNumber}.pdf`);
       document.body.appendChild(link);
       link.click();
       link.remove();

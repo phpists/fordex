@@ -30,6 +30,7 @@ export const TransportationOrderFormStepper = ({
     goBack,
     isFirstStep,
     isLastStep,
+    disabled,
   } = useStepperStore();
 
   return (
@@ -52,7 +53,7 @@ export const TransportationOrderFormStepper = ({
       }
       nextButton={
         <LoadingButton
-          disabled={formSubmitting}
+          disabled={formSubmitting || disabled}
           loading={formSubmitting}
           variant="contained"
           type="submit"

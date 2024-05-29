@@ -126,7 +126,7 @@ export const PositionInfo = forwardRef<PositionInfoRef, ProductInfoProps>(
                     })}
                     fullWidth
                     variant="standard"
-                    label="Gewicht kg."
+                    label="Effektivgewicht kg."
                     type="number"
                     error={weightInvalid}
                     helperText={weightError?.message}

@@ -71,9 +71,9 @@ export const PackadgeSelect = forwardRef<
         {!loading &&
           packadges.map((packadge) => (
             <MenuItem
-              selected={packadge.kg?.toString() === value?.toString()}
+              selected={packadge.designation?.toString() === value?.toString()}
               key={packadge.id}
-              value={packadge.kg.toString()}
+              value={packadge.designation.toString()}
             >
               {packadge.designation} {packadge.kg}kg
             </MenuItem>

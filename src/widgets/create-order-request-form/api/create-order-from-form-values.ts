@@ -14,7 +14,7 @@ interface FormData {
 }
 
 const formatTime = (iso: string | null) => {
-  return iso ? dayjs(iso).format('hh:mm') : null;
+  return iso ? dayjs(iso).format('HH:mm') : null;
 };
 
 export async function createOrderFromFormData({

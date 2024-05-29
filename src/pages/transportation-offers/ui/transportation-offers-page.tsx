@@ -50,7 +50,7 @@ export function RequestOrdersPage() {
           sx={(theme) => ({
             margin: 'auto',
             width: '100%',
-            maxHeight: 670,
+            maxHeight: 700,
             maxWidth: 1000,
             top: '50%',
             transform: 'translateY(-50%)',

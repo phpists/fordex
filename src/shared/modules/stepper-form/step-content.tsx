@@ -2,11 +2,16 @@ import { useStepperStore } from './store';
 
 import { useToggle } from 'react-use';
 import { useLayoutEffect } from 'react';
+import { ProfileInfoDTO } from 'shared/api';
 
-export function MultiStepFormStepContent() {
+interface Props {
+  profileInfo: ProfileInfoDTO | null;
+}
+
+export function MultiStepFormStepContent({ profileInfo }: Props) {
   const [formIsMounted, toggle] = useToggle(true);
 
-  const Component = useStepperStore(
+  const Component: any = useStepperStore(
     ({ step, formSteps }) => formSteps[step].component
   );
   const validationSchema = useStepperStore(
@@ -27,5 +32,5 @@ export function MultiStepFormStepContent() {
     return <></>;
   }
 
-  return <Component />;
+  return <Component profileInfo={profileInfo} />;
 }

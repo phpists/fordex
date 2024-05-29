@@ -1,6 +1,10 @@
 import { AxiosError } from 'axios';
 
-import { AuthorizeSessionResponseDTO, refreshSession } from 'shared/api';
+import {
+  AuthorizeSessionResponseDTO,
+  SESSION_API_URLS,
+  refreshSession,
+} from 'shared/api';
 import { httpClient } from 'shared/utils';
 
 export function interceptRequestWithAuth(accessToken: string) {
@@ -46,9 +50,25 @@ export function interceptResponseWithAuth(
         }
       }
       if (error.response.status == 401) {
-        localStorage.removeItem('fordexAuth');
-        window.location.pathname = '/sign-in';
-        return Promise.reject(error);
+        // localStorage.removeItem('fordexAuth');
+        // window.location.pathname = '/sign-in';
+        if (error.response?.config.url !== SESSION_API_URLS.refreshSession) {
+          try {
+            const { data } = await refreshSession(refreshToken);
+            const { headers, ...restConfig } = error.config;
+            onRefreshSuccess(data);
+            return httpClient({
+              ...restConfig,
+              headers: {
+                ...headers,
+                Authorization: data.accessToken,
+              },
+            });
+          } catch (e) {
+            return Promise.reject(error);
+          }
+        } else {
+        }
       }
 
       return Promise.reject(error);
