@@ -43,7 +43,7 @@ export function ActiveOrdersTable() {
 
   const fabAction = useMemo(
     () => ({
-      title: 'Neuer Transport-Auftrag',
+      title: 'Transportanfrage erstellen',
       icon: <AddIcon />,
       onClick: onFabClick,
     }),

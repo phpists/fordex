@@ -214,7 +214,14 @@ function useWatchTimeRanges(addressDirection: 'addressFrom' | 'addressTo') {
       toggleDisabled(false);
       clearErrors('addressTo.timeTo');
     }
-  }, [watchAddressFromTimeFrom, watchAddressToTimeFrom, dateFrom, dateTo]);
+  }, [
+    watchAddressFromTimeFrom,
+    watchAddressFromTimeTo,
+    watchAddressToTimeTo,
+    watchAddressToTimeFrom,
+    dateFrom,
+    dateTo,
+  ]);
 
   useEffect(() => {
     try {

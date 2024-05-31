@@ -44,7 +44,7 @@ export const RequestOrdersTable = memo(function RequestOrdersTableBase() {
 
   const fabAction = useMemo(
     () => ({
-      title: 'Neuer Transport-Auftrag',
+      title: 'Transportanfrage erstellen',
       icon: <AddIcon />,
       onClick: onFabClick,
     }),

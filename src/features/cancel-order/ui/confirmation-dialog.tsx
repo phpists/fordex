@@ -107,7 +107,7 @@ export function CancelOrderConfirmation({
         )}
       >
         <DialogTitle>
-          Мöchten Sie Ihren Transportauftrag wirklich stornieren?
+          Мöchten Sie Ihren Transportanfrage wirklich stornieren?
         </DialogTitle>
         <DialogContent>
           <Box mb={1} />
@@ -132,7 +132,7 @@ export function CancelOrderConfirmation({
             Abbrechen
           </Button>
           <Button type="submit" disabled={isSubmitting}>
-            Nachricht senden
+            Transportanfrage stornieren
           </Button>
         </DialogActions>
       </Dialog>

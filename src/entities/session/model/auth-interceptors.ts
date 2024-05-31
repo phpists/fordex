@@ -6,6 +6,7 @@ import {
   refreshSession,
 } from 'shared/api';
 import { httpClient } from 'shared/utils';
+import { getAuthCredentialsFromLocalStorage } from './auth-local-storage-manager';
 
 export function interceptRequestWithAuth(accessToken: string) {
   return httpClient.interceptors.request.use((axiosConfig) => {
@@ -34,7 +35,10 @@ export function interceptResponseWithAuth(
         error.config._retry = true;
 
         try {
-          const { data } = await refreshSession(refreshToken);
+          const savedAuthCredentials = getAuthCredentialsFromLocalStorage();
+          const { data } = await refreshSession(
+            savedAuthCredentials?.refreshToken ?? refreshToken
+          );
           const { headers, ...restConfig } = error.config;
           onRefreshSuccess(data);
           return httpClient({
@@ -50,11 +54,12 @@ export function interceptResponseWithAuth(
         }
       }
       if (error.response.status == 401) {
-        // localStorage.removeItem('fordexAuth');
-        // window.location.pathname = '/sign-in';
         if (error.response?.config.url !== SESSION_API_URLS.refreshSession) {
           try {
-            const { data } = await refreshSession(refreshToken);
+            const savedAuthCredentials = getAuthCredentialsFromLocalStorage();
+            const { data } = await refreshSession(
+              savedAuthCredentials?.refreshToken ?? refreshToken
+            );
             const { headers, ...restConfig } = error.config;
             onRefreshSuccess(data);
             return httpClient({
@@ -65,9 +70,12 @@ export function interceptResponseWithAuth(
               },
             });
           } catch (e) {
+            localStorage.removeItem('fordexAuth');
+            window.location.pathname = '/sign-in';
             return Promise.reject(error);
           }
         } else {
+          return Promise.reject(error);
         }
       }
 

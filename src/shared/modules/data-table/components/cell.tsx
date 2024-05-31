@@ -49,10 +49,10 @@ export const StyledCell = styled(TableCell)<Props>`
       display: block;
     }
     &.head-cell.mobile {
-      &:nth-child(4) {
+      &:nth-of-type(4) {
         width: 500px;
       }
-      &:nth-child(6) {
+      &:nth-of-type(6) {
         width: 80px;
       }
     }
@@ -62,7 +62,7 @@ export const StyledCell = styled(TableCell)<Props>`
   }
   @media (max-width: 1200px) {
     &.head-cell.mobile {
-      &:nth-child(4) {
+      &:nth-of-type(4) {
         width: 300px;
       }
     }
@@ -72,10 +72,10 @@ export const StyledCell = styled(TableCell)<Props>`
   }
   @media (max-width: 600px) {
     &.head-cell.mobile {
-      &:nth-child(4) {
+      &:nth-of-type(4) {
         width: 120px;
       }
-      &:nth-child(6) {
+      &:nth-of-type(6) {
         width: 90px;
       }
     }

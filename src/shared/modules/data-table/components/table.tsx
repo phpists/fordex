@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { memo, useContext, useMemo, useState } from 'react';
+import { Fragment, memo, useContext, useMemo, useState } from 'react';
 import arrowIcon from '../../../assets/images/arrow-down.svg';
 import { styled } from '@mui/material/styles';
 import {
@@ -101,7 +101,7 @@ function DataTableBase<T>({
         <TableBody>
           {data.map((row, i) => {
             return (
-              <>
+              <Fragment key={i}>
                 <TableRow
                   hover
                   key={`${rowKey ? row[rowKey] : i}`}
@@ -214,7 +214,7 @@ function DataTableBase<T>({
                     )}
                   </TableRow>
                 ) : null}
-              </>
+              </Fragment>
             );
           })}
         </TableBody>

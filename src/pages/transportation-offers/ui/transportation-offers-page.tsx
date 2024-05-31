@@ -30,7 +30,7 @@ export function RequestOrdersPage() {
     () => [
       {
         type: 'button',
-        label: 'Neuer Transport-Auftrag',
+        label: 'Transportanfrage erstellen',
         variant: 'contained',
         startIcon: AddIcon,
         shouldRender: !isTablet,

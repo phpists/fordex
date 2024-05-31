@@ -21,7 +21,7 @@ export function DownloadDocumentRowAction({
       );
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `order${orderNumber}.pdf`);
+      link.setAttribute('download', `${orderNumber}.pdf`);
       document.body.appendChild(link);
       link.click();
       link.remove();
