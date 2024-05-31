@@ -3,6 +3,7 @@
 import { forwardRef, useEffect, useState } from 'react';
 
 import {
+  Autocomplete,
   Box,
   CircularProgress,
   FormControl,
@@ -10,6 +11,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  TextField,
 } from '@mui/material';
 import { getPackadges } from 'shared/api/address-api';
 import { useAddPositionsFormContext } from 'features/create-order-request';
@@ -52,33 +54,38 @@ export const PackadgeSelect = forwardRef<
   }, []);
 
   return (
-    <FormControl {...formControlProps}>
+    <div>
       <InputLabel id="packadges-label">Verp</InputLabel>
-      {/* @ts-ignore */}
-      <Select
-        {...register(`positions.${index}.pack`)}
-        labelId="packadges-label"
-        label="Verp"
-        ref={ref}
-        value={value}
-        onChange={(e) => setValue(`positions.${index}.pack`, e?.target.value)}
-      >
-        {loading && (
-          <Box>
-            <CircularProgress size={24} />
-          </Box>
-        )}
-        {!loading &&
-          packadges.map((packadge) => (
-            <MenuItem
-              selected={packadge.designation?.toString() === value?.toString()}
-              key={packadge.id}
-              value={packadge.designation.toString()}
-            >
-              {packadge.designation} {packadge.kg}kg
-            </MenuItem>
-          ))}
-      </Select>
-    </FormControl>
+      <FormControl {...formControlProps}>
+        {/* @ts-ignore */}
+        <Autocomplete
+          {...register(`positions.${index}.pack`)}
+          ref={ref}
+          options={packadges?.map((p) => ({
+            label: `${p.designation} ${p.kg}kg`,
+            id: p?.id,
+          }))}
+          freeSolo
+          value={value}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              InputProps={{
+                ...params.InputProps,
+                inputProps: {
+                  ...params.inputProps,
+                  maxLength: 10,
+                },
+              }}
+              variant="standard"
+              value={value}
+              onChange={(e) =>
+                setValue(`positions.${index}.pack`, e?.target.value)
+              }
+            />
+          )}
+        />
+      </FormControl>
+    </div>
   );
 });
