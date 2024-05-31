@@ -58,6 +58,9 @@ export const PackadgeSelect = forwardRef<
           }))}
           freeSolo
           value={value}
+          onChange={(e: any) =>
+            setValue(`positions.${index}.pack`, e?.target?.outerText)
+          }
           renderInput={(params) => (
             <TextField
               {...params}

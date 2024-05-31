@@ -45,6 +45,7 @@ export const PositionInfo = forwardRef<PositionInfoRef, ProductInfoProps>(
     const { invalid: weightInvalid, error: weightError } = getFieldState(
       `positions.${index}.weight`
     );
+
     const { error: volumeError } = getFieldState(`positions.${index}.volume`);
     const { error: ldmError } = getFieldState(`positions.${index}.ldm`);
     const { error: areaError } = getFieldState(`positions.${index}.area`);
