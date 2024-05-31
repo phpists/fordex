@@ -8,9 +8,24 @@ import {
 import { httpClient } from 'shared/utils';
 import { getAuthCredentialsFromLocalStorage } from './auth-local-storage-manager';
 
+const handleGetTokenFromStorage = (): string | undefined => {
+  const authData = localStorage.getItem('fordexAuth');
+
+  if (authData) {
+    try {
+      const accessToken = JSON.parse(authData)?.accessToken;
+      return accessToken;
+    } catch {
+      return undefined;
+    }
+  } else {
+    return undefined;
+  }
+};
+
 export function interceptRequestWithAuth(accessToken: string) {
   return httpClient.interceptors.request.use((axiosConfig) => {
-    axiosConfig.headers.Authorization = `Bearer ${accessToken}`;
+    axiosConfig.headers.Authorization = `Bearer ${handleGetTokenFromStorage() ?? accessToken}`;
 
     return axiosConfig;
   });

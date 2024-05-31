@@ -4,13 +4,9 @@ import { forwardRef, useEffect, useState } from 'react';
 
 import {
   Autocomplete,
-  Box,
-  CircularProgress,
   FormControl,
   FormControlProps,
   InputLabel,
-  MenuItem,
-  Select,
   TextField,
 } from '@mui/material';
 import { getPackadges } from 'shared/api/address-api';
@@ -36,7 +32,6 @@ export const PackadgeSelect = forwardRef<
   ref
 ) {
   const [packadges, setPackadges] = useState<Packadge[]>([]);
-  const [loading, setLoading] = useState(false);
   const {
     form: { register, control, setValue },
   } = useAddPositionsFormContext();
@@ -46,11 +41,7 @@ export const PackadgeSelect = forwardRef<
   });
 
   useEffect(() => {
-    setLoading(true);
-    getPackadges().then((resp: any) => {
-      setLoading(false);
-      setPackadges(resp?.data?.data);
-    });
+    getPackadges().then((resp: any) => setPackadges(resp?.data?.data));
   }, []);
 
   return (
