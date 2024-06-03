@@ -26,7 +26,14 @@ export function configureProductColumns() {
     columnBuilder.create('pack', {
       id: 'packType',
       renderHead: () => 'Verpackung',
-      renderCell: (value) => <Typography>{value}</Typography>,
+      renderCell: (value) => (
+        <Typography>
+          {value
+            ?.split(' ')
+            ?.filter((s) => !s?.includes('kg'))
+            ?.join(' ')}
+        </Typography>
+      ),
     }),
     columnBuilder.create('description', {
       id: 'description',

@@ -25,7 +25,7 @@ interface PaginatedDataStore<T> {
 }
 
 const INITIAL_BASE_FILTER_VALUES: BasePaginationParams = {
-  pageNumber: 0,
+  pageNumber: 1,
   pageSize: ITEMS_PER_PAGE,
 };
 
@@ -70,6 +70,7 @@ export const createPaginatedDataStore = <
         setPageSize: (size) =>
           set((state) => {
             state.filterValues.pageSize = size;
+            state.filterValues.pageNumber = 1;
           }),
         setItemsCount: (itemsCount) =>
           set((state) => {

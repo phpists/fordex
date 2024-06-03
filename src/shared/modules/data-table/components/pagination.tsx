@@ -27,7 +27,7 @@ export function DataTablePagination({
       component="div"
       count={itemsCount}
       rowsPerPage={pageSize}
-      page={page}
+      page={page - 1}
       onPageChange={(_, newPage) => onPageChange(newPage + 1)}
       onRowsPerPageChange={(event) =>
         onPageSizeChange(parseInt(event.target.value, 10))

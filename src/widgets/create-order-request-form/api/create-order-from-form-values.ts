@@ -53,7 +53,10 @@ export async function createOrderFromFormData({
         square: it.area || 0,
         productName: it.marking,
         description: it.description,
-        productType: it.pack,
+        productType: it.pack
+          ?.split(' ')
+          ?.filter((s) => !s?.includes('kg'))
+          ?.join(' '),
         un: it.dangerousGoods,
       })),
     },

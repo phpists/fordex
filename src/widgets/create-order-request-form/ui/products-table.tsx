@@ -29,7 +29,12 @@ export function ProductsTable() {
                 <b>{renderHead()}</b>
                 <span>
                   {STRING_FIELDS?.includes(accessor)
-                    ? p?.[accessor] ?? '-'
+                    ? accessor === 'pack'
+                      ? p?.[accessor]
+                          ?.split(' ')
+                          ?.filter((s) => !s?.includes('kg'))
+                          ?.join(' ')
+                      : p?.[accessor] ?? '-'
                     : isNaN(Number(p?.[accessor])) || !p?.[accessor]
                       ? '0'
                       : p?.[accessor]}
